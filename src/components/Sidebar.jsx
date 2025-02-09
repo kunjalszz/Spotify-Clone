@@ -45,7 +45,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 200px;
+  width: 100%;
   padding: 1rem;
   .top__links {
     display: flex;
