@@ -9,6 +9,7 @@ import { reducerCases } from "../utils/constant";
 
 function Player_Controls() {
   const [{ token, player_state }, dispatch] = useStateProvider();
+
   const changeTrack = async (type) => {
     try {
       await axios.post(
@@ -53,17 +54,29 @@ function Player_Controls() {
   };
 
   const changeState = async () => {
-    const state = player_state ? "pause" : "play";
-    const deviceResponse = await axios.put(
-      `https://api.spotify.com/v1/me/player/${state}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    dispatch({ type: reducerCases.SET_PLAYER_STATE, state: !state });
+    if (!token) {
+      console.error("no token available");
+      return;
+    }
+    try {
+      const state = player_state ? "pause" : "play";
+      const deviceResponse = await axios.put(
+        `https://api.spotify.com/v1/me/player/${state}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch({ type: reducerCases.SET_PLAYER_STATE, state: !player_state });
+    } catch (error) {
+      console.error(
+        "error changing player state",
+        error.response?.data || error.message
+      );
+    }
   };
 
   return (

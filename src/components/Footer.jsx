@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Current_Track from "./Current_Track";
 import Player_Controls from "./Player_Controls";
+import Volume_Controls from "./Volume_Controls";
 const Footer = () => {
   return (
     <Container>
       <Current_Track />
       <Player_Controls />
+      <Volume_Controls />
     </Container>
   );
 };

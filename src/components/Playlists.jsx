@@ -28,11 +28,21 @@ function Playlists() {
     };
     getPlaylistsData();
   }, [token, dispatch]);
+
+  const changeCurrentPlaylist = (selectedPlaylistid) => {
+    console.log(selectedPlaylistid);
+    dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistid });
+  };
+
   return (
     <Container>
       <ul>
         {playlists.map(({ name, id }) => {
-          return <li key={id}>{name}</li>;
+          return (
+            <li key={id} onClick={() => changeCurrentPlaylist(id)}>
+              {name}
+            </li>
+          );
         })}
       </ul>
     </Container>

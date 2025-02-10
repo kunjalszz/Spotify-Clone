@@ -20,18 +20,18 @@ function Current_Track() {
       );
 
       console.log(response);
-      if (response.data !== "") {
+      if (response.data && response.data.item) {
         const { item } = response.data;
         const current_track = {
           id: item.id,
           name: item.name,
-          artists: item.artists.map((artist) => artist.name),
+          artists: item.artists.map((artist) => artist.name).join(", "),
           image: item.album.images[2].url,
         };
 
-        //   console.log(playlists);
+        // console.log(playlists);
         dispatch({ type: reducerCases.SET_CURRENT_TRACK, current_track });
-      }
+      } else dispatch({ type: reducerCases.SET_CURRENT_TRACK, current_track });
     };
     getCurrentTrack();
   }, [token, dispatch]);
@@ -44,7 +44,7 @@ function Current_Track() {
           </div>
           <div className="track__info">
             <h4>{current_track.name}</h4>
-            <h6>{current_track.artists?.join(", ")}</h6>
+            <h6>{current_track.artists}</h6>
           </div>
         </div>
       )}
